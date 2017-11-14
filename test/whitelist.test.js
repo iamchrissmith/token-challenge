@@ -1,4 +1,4 @@
-const Whitelist = artifacts.require('./Whitelist.sol')
+const Whitelist = artifacts.require('./Whitelist.sol');
 web3.eth.getTransactionReceiptMined = require("./libs/getTransactionReceiptMined.js");
 const expectedExceptionPromise = require('./libs/expected_exception_testRPC_and_geth');
 

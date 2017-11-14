@@ -1,7 +1,9 @@
-var Whitelist = artifacts.require("./Whitelist.sol");
+const Whitelist = artifacts.require("../installed_contracts/tokens/contracts/Whitelist.sol");
+const StandardToken = artifacts.require("../installed_contracts/tokens/contracts/StandardToken.sol");
 
-module.exports = function(deployer) {
+module.exports = (deployer, network) => {
   deployer.deploy(Whitelist);
+  deployer.deploy(StandardToken);
 };
 
 

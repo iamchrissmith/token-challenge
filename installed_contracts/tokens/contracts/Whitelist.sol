@@ -49,7 +49,6 @@ contract Whitelist is Ownable {
     returns(bool isIndeed)
   {
     return whitelist[_check];
-    // return false;
   }
   
 }

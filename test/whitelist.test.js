@@ -16,14 +16,27 @@ contract('Whitelist', function(accounts) {
 
   describe('Ownership inheritance', () => {
     it('should be owned by "owner"', async () => {
-      _owner = await contract.owner({from:owner})
+      const _owner = await contract.owner({from:owner})
       assert.strictEqual(_owner, owner, "owner is not owned by 'owner'")
     })
 
     it('should allow owner to change ownership', async () => {
-      contract.transferOwnership(newOwner, {from:owner})
-      _owner = await contract.owner({from:owner})
+      await contract.transferOwnership(newOwner, {from:owner})
+      const _owner = await contract.owner({from:owner})
       assert.strictEqual(_owner, newOwner, "ownership did not transfer")
     })
   })
+
+  describe('.isWhitelisted', () => {
+    it('should return false for addresses not added', async () => {
+      _listed = await contract.isWhitelisted(owner, {from:owner})
+      assert.isFalse(_listed, 'no address should be listed initially')
+    })
+  }) 
+
+  // describe('.addAddress', () => {
+  //   it('should return true and list the address', async () => {
+  //     contract.addAddress(okayAddress)
+  //   })
+  // })
 })

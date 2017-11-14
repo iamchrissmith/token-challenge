@@ -18,13 +18,17 @@ contract Whitelist is Ownable {
 
   /*----------- Owner Methods -----------*/
 
-  // function addAddress(address _okay)
-  //   public
-  //   onlyOwner
-  //   returns(bool success)
-  // {
-  //   return true;
-  // }
+  function addAddress(address _okay)
+    public
+    onlyOwner
+    returns(bool success)
+  {
+    require(_okay != address(0));
+    require(!isWhitelisted(_okay));
+    whitelist[_okay] = true;
+    LogAddAddress(msg.sender, _okay);
+    return true;
+  }
 
   // function removeAddress(address _delete)
   //   public

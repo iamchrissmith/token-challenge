@@ -34,9 +34,30 @@ contract('Whitelist', function(accounts) {
     })
   }) 
 
-  // describe('.addAddress', () => {
-  //   it('should return true and list the address', async () => {
-  //     contract.addAddress(okayAddress)
-  //   })
-  // })
+  describe('.addAddress', () => {
+    it('should add the address to the list', async () => {
+      await contract.addAddress(okayAddress, {from:owner})
+      _listed = await contract.isWhitelisted(okayAddress, {from:owner})
+      assert.isTrue(_listed, 'okayAddress was not added to the list')
+    })
+
+    it('should only allow the owner to add addresses', () => {
+      return expectedExceptionPromise( () => {
+        return contract.addAddress(okayAddress, {from:badAddress})
+      }, 3000000);
+    })
+
+    it('should not allow adding an address twice', async () => {
+      await contract.addAddress(okayAddress, {from:owner})
+      return expectedExceptionPromise( () => {
+        return contract.addAddress(okayAddress, {from:owner})
+      }, 3000000);
+    })
+
+    it('should not allow adding a Zero address', async () => {
+      return expectedExceptionPromise( () => {
+        return contract.addAddress(0, {from:owner})
+      }, 3000000);
+    })
+  })
 })

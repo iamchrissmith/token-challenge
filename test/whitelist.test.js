@@ -29,7 +29,7 @@ contract('Whitelist', function(accounts) {
 
   describe('.isWhitelisted', () => {
     it('should return false for addresses not added', async () => {
-      _listed = await contract.isWhitelisted(owner, {from:owner})
+      const _listed = await contract.isWhitelisted(owner, {from:owner})
       assert.isFalse(_listed, 'no address should be listed initially')
     })
   }) 
@@ -37,7 +37,7 @@ contract('Whitelist', function(accounts) {
   describe('.addAddress', () => {
     it('should add the address to the list', async () => {
       await contract.addAddress(okayAddress, {from:owner})
-      _listed = await contract.isWhitelisted(okayAddress, {from:owner})
+      const _listed = await contract.isWhitelisted(okayAddress, {from:owner})
       assert.isTrue(_listed, 'okayAddress was not added to the list')
     })
 
@@ -57,6 +57,36 @@ contract('Whitelist', function(accounts) {
     it('should not allow adding a Zero address', async () => {
       return expectedExceptionPromise( () => {
         return contract.addAddress(0, {from:owner})
+      }, 3000000);
+    })
+  })
+
+  describe('.removeAddress', () => {
+    beforeEach( async () => {
+      await contract.addAddress(okayAddress, {from:owner})
+    })
+
+    it('should remove the address from the list', async () => {
+      let _listed = await contract.isWhitelisted(okayAddress, {from:owner})
+      assert.isTrue(_listed, 'okayAddress was not added to the list')
+
+      await contract.removeAddress(okayAddress, {from:owner})
+      _listed = await contract.isWhitelisted(okayAddress, {from:owner})
+      assert.isFalse(_listed, 'okayAddress was not removed from the list')
+    })
+
+    it('should only allow the owner to add addresses', () => {
+      return expectedExceptionPromise( () => {
+        return contract.removeAddress(okayAddress, {from:badAddress})
+      }, 3000000);
+    })
+
+    it('should not allow removing an non-added address', async () => {
+      const _listed = await contract.isWhitelisted(badAddress, {from:owner})
+      assert.isFalse(_listed, 'badAddress was already on the list')
+
+      return expectedExceptionPromise( () => {
+        return contract.removeAddress(badAddress, {from:owner})
       }, 3000000);
     })
   })

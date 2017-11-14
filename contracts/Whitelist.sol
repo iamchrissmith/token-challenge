@@ -30,13 +30,16 @@ contract Whitelist is Ownable {
     return true;
   }
 
-  // function removeAddress(address _delete)
-  //   public
-  //   onlyOwner
-  //   returns(bool success)
-  // {
-  //   return true;
-  // }
+  function removeAddress(address _delete)
+    public
+    onlyOwner
+    returns(bool success)
+  {
+    require(isWhitelisted(_delete));
+    whitelist[_delete] = false;
+    LogRemoveAddress(msg.sender, _delete);
+    return true;
+  }
 
   /*----------- Constants -----------*/
 

@@ -7,8 +7,6 @@
   },
   "author": "Chris Smith <chris.smith@consensys.net>",
   "license": "ISC",
-  "dependencies": {
-  },
-  "devDependencies": {
-  }
+  "dependencies": {},
+  "devDependencies": {}
 }

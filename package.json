@@ -3,10 +3,18 @@
   "version": "0.0.1",
   "description": "Contracts for Developer interviews.",
   "scripts": {
-    "test": "truffle test"
+    "test": "truffle test",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test-app": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "dependencies": {
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-scripts": "1.1.1"
   },
   "author": "Chris Smith <chris.smith@consensys.net>",
   "license": "ISC",
-  "dependencies": {},
   "devDependencies": {}
 }
